@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href='https://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+    <title>Knowledgegraph.co - Results for "{{ query }}"</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/results/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/static/results/css/simple-sidebar.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/">
+                        KnowledgeGraph
+                    </a>
+                </li>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+                <li>
+                    <a href="/contact">Contact</a>
+                </li>
+               
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>Knowledge Graph results for: <strong>"{{ query }}"</strong></h1>
+                    </br>
+                        {% for ind in topten_namedesc %}
+                        <div class="results">
+                           <style type="text/css">
+                            .tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;border-width:1px;border-style:solid;width: 900px;}
+                            .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
+                            .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
+                            .tg .tg-2ag8{background-color:#6665cd;vertical-align:top;font-size: 20px;color: #fff;font-weight: bold;}
+                            .tg .tg-yzt1{background-color:#efefef;vertical-align:top}
+                            .tg .tg-yw4l{vertical-align:top}
+                            .tg .tg-2s1i{background-color:#fd6864;vertical-align:top;font-size: 20px;color: #fff;font-weight: bold;}
+                            @media screen and (max-width: 767px) {.tg {width: auto !important;}.tg col {width: auto !important;}.tg-wrap {overflow-x: auto;-webkit-overflow-scrolling: touch;}}
+                            </style>
+                            <div class="tg-wrap"><table class="tg">
+                              <tr>
+                                <th class="tg-2ag8" style="width:49px">Name:</th>
+                                <th class="tg-2ag8" colspan="2">{{ ind.get("result").get("name") }}</th>
+                              </tr>
+                              <tr>
+                                <td class="tg-yw4l" style="width:49px">Description:</td>
+                                <td class="tg-yw4l">{{ ind.get("result").get("description") }}</td>
+                                <td class="tg-yzt1" rowspan="5"><img src="{{ ind.get("result", {}).get("image", {}).get("contentUrl") }}" style="float:right;" ></td>
+                              </tr>
+                              <tr>
+                                <td class="tg-yw4l" style="width:49px">Further Description:</td>
+                                <td class="tg-yw4l">{{ ind.get("result", {}).get("detailedDescription", {}).get("articleBody") }}</td>
+                              </tr>
+                              <tr>
+                                <td class="tg-yw4l" style="width:49px">Schema Type:</td>
+                                <td class="tg-yw4l">{{ ", ".join(ind.get("result").get("@type")) }}</td>
+                              </tr>
+                              <tr>
+                                <td class="tg-yw4l" style="width:49px">URL:</td>
+                                <td class="tg-yw4l">{{ ind.get("result").get("url") }}</td>
+                              </tr>
+                              <tr>
+                                <td class="tg-yw4l" style="width:49px">Source URL:</td>
+                                <td class="tg-yw4l">{{ ind.get("result", {}).get("detailedDescription", {}).get("url") }}</td>
+                              </tr>
+                              <tr>
+                                <td class="tg-2s1i" style="width:49px">Score:</td>
+                                <td class="tg-2s1i" colspan="2">{{ ind.get("resultScore")|round(2, 'floor') }}</td>
+                              </tr>
+                            </table></div>
+                        </div>
+                    </br>
+                        {% endfor %}
+                    </br>
+                    <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Show Menu</a>  
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="/static/results/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/results/js/bootstrap.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+</body>
+
+</html>
